@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location" value="classpath:codegenerate.properties" />
+	</bean>
+
+	<bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor" />
+
+	<bean id="jdbcConnection" class="code.generate.JdbcConnection" init-method="init" destroy-method="destroy">
+		<property name="url" value="${jdbc.url}" />
+		<property name="user" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+		<property name="driverClass" value="${jdbc.driverClassName}" />
+	</bean>
+
+	<bean id="writeFile" class="code.generate.WriteFile" />
+
+	<bean id="modelCreator" class="code.generate.ModelCreator">
+		<property name="modelPackage" value="${modelPackage}" />
+	</bean>
+
+	<bean id="daoCreator" class="code.generate.DaoCreator">
+		<property name="modelPackage" value="${modelPackage}" />
+		<property name="daoPackage" value="${daoPackage}" />
+		<property name="pageListPackage" value="${pageListPackage}" />
+		<property name="pageListClassName" value="${pageListClassName}" />
+		<property name="pageQueryPackage" value="${pageQueryPackage}" />
+		<property name="pageQueryClassName" value="${pageQueryClassName}" />
+		<property name="integerPackage" value="${integerPackage}" />
+		<property name="integerClassName" value="${integerClassName}" />
+	</bean>
+
+	<bean id="daoImplCreator" class="code.generate.DaoImplCreator">
+		<property name="modelPackage" value="${modelPackage}" />
+		<property name="daoPackage" value="${daoPackage}" />
+		<property name="pageListPackage" value="${pageListPackage}" />
+		<property name="pageListClassName" value="${pageListClassName}" />
+		<property name="pageQueryPackage" value="${pageQueryPackage}" />
+		<property name="pageQueryClassName" value="${pageQueryClassName}" />
+		<property name="searchMapClassName" value="${searchMapClassName}" />
+		<property name="integerPackage" value="${integerPackage}" />
+		<property name="integerClassName" value="${integerClassName}" />
+		<property name="utilPackage" value="${utilPackage}" />
+		<property name="listClassName" value="${listClassName}" />
+		<property name="collClassName" value="${collClassName}" />
+		<property name="paginatorPackage" value="${paginatorPackage}" />
+		<property name="paginatorClassName" value="${paginatorClassName}" />
+		<property name="searchMapPackage" value="${searchMapPackage}" />
+	</bean>
+
+	<bean id="sqlmapCreator" class="code.generate.SqlmapCreator">
+		<property name="modelPackage" value="${modelPackage}" />
+		<property name="daoPackage" value="${daoPackage}" />
+	</bean>
+
+	<bean id="xmlFileCreator" class="code.generate.XmlFileCreator">
+		<property name="daoPackage" value="${daoPackage}" />
+	</bean>
+
+	<bean id="testCaseFileCreator" class="code.generate.TestCaseFileCreator">
+		<property name="daoPackage" value="${daoPackage}" />
+		<property name="modelPackage" value="${modelPackage}" />
+	</bean>
+
+	<bean id="pageUtil" class="code.generate.PageUtil">
+		<property name="pageListPackage" value="${pageListPackage}" />
+		<property name="pageListClassName" value="${pageListClassName}" />
+		<property name="pageQueryPackage" value="${pageQueryPackage}" />
+		<property name="pageQueryClassName" value="${pageQueryClassName}" />
+		<property name="searchMapClassName" value="${searchMapClassName}" />
+
+	</bean>
+
+	<bean id="metaDataLocator" class="code.generate.MetaDataLocator" />
+
+	<bean id="codeMain" class="code.generate.CodeMain">
+		<property name="tables">
+			<list>
+				<value>iax_traffic_throttling</value>
+				<!-- <value>ad_campaign</value> -->
+				<!-- <value>slot</value> -->
+				<!-- <value>ad_entry_size</value> -->
+				<!-- <value>t_admin_user</value> <value>t_community</value> <value>t_community_address</value> <value>t_community_subawy</value>
+					<value>t_dev</value> <value>t_evaluation</value> <value>t_house_order</value> <value>t_lookhouse</value> <value>t_role</value>
+					<value>t_subawy</value> <value>t_user</value> <value>t_user_role</value> -->
+			</list>
+		</property>
+		<property name="needXmlFile" value="${needXmlFile}" />
+		<property name="needModel" value="${needModel}" />
+		<property name="needDao" value="${needDao}" />
+		<property name="needDaoImpl" value="${needDaoImpl}" />
+		<property name="needSqlmap" value="${needSqlmap}" />
+		<property name="needTestCaseFile" value="${needTestCaseFile}" />
+	</bean>
+</beans>
